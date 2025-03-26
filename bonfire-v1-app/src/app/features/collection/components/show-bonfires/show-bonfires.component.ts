@@ -126,7 +126,7 @@ export class ShowBonfiresComponent implements OnInit {
     let size;
     
     if (zoom < 3) {
-      size = 7;
+      size = 9;
     } else if (zoom < 5) {
       size = 15;
     } else if (zoom < 7) {
