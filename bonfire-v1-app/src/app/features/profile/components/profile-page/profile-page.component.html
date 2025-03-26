@@ -1,0 +1,37 @@
+<div class="min-h-screen p-6" style="background-color: rgb(10, 13, 17)">
+  <app-profile-header
+    [isOwnUser]="isOwnUser"
+    [username]="username"
+    [profile]="profile"
+    [following]="following"
+    [followers]="followers"
+    (followStatusChanged)="onFollowStatusChanged($event)"
+  ></app-profile-header>
+
+  <div class="tab-navigation relative w-11/12 mx-auto mt-15 mb-3">
+    <div class="flex space-x-4">
+      <button 
+        (click)="activeTab = 'collection'" 
+        [ngClass]="{'text-white font-medium border-blue-500': activeTab === 'collection', 'text-gray-400 border-transparent hover:text-white hover:border-white/30': activeTab !== 'collection'}"
+        class="px-4 py-2 border-b-2 transition-all">
+        Collection
+      </button>
+      <button 
+        (click)="activeTab = 'world'" 
+        [ngClass]="{'text-white font-medium border-blue-500': activeTab === 'world', 'text-gray-400 border-transparent hover:text-white hover:border-white/30': activeTab !== 'world'}"
+        class="px-4 py-2 border-b-2 transition-all">
+        World
+      </button>
+    </div>
+  </div>
+  
+  <div class="bonfire-container relative w-11/12 mx-auto mt-10 mb-20">
+    <ng-container *ngIf="activeTab === 'collection'">
+      <app-show-nodes [username]="username"></app-show-nodes>
+    </ng-container>
+    
+    <ng-container *ngIf="activeTab === 'world'">
+      <app-show-bonfires [username]="username" class="block h-full"></app-show-bonfires>
+    </ng-container>
+  </div>
+</div>

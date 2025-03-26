@@ -1,0 +1,63 @@
+<div class="w-full h-screen bg-cover bg-center relative flex flex-col items-center justify-center" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url('/assets/images/bonfire_homepage_edited.png')">
+
+    <div class="flex flex-col items-center max-w-lg w-full px-4 -mt-2">
+      <div class="text-center -mb-5">
+        <h1 class="text-5xl -mb-2 font-bold text-white tracking-tight">Bonfire</h1>
+        <p class="text-xl text-gray-300/90 mt-2">Sign in to your account</p>
+      </div>
+
+      
+  
+      <div class="bg-white/1 backdrop-blur-[10px] rounded-xl border-1 border-white/20 shadow-[inset_0px_-10px_25px_rgba(240,240,240,.2),0_0_15px_2px_rgba(255,255,255,.15)] p-8 w-full relative scale-85">
+        <div *ngIf="badCredentials" class="bg-red-500/20 border border-red-500/50 rounded-lg p-3 mb-4">
+          <p class="text-red-500 text-sm text-center font-medium">
+            Incorrect username or password
+          </p>
+        </div>
+        <div class="relative z-10 space-y-6">
+          <form class="space-y-6" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="group">
+              <label class="block text-xs font-semibold text-gray-300/90 mb-2 tracking-widest uppercase">USERNAME</label>
+              <input type="text" formControlName="username"
+                class="w-full px-4 py-4 bg-white/5 rounded-xl border border-white/15 text-white">
+            </div>
+  
+            <div class="group">
+              <label class="block text-xs font-semibold text-gray-300/90 mb-2 tracking-widest uppercase">PASSWORD</label>
+              <input type="password" formControlName="password"
+                class="w-full px-4 py-4 bg-white/5 rounded-xl border border-white/15 text-white">
+            </div>
+  
+            <div class="flex justify-between items-center py-1">
+              <div class="flex items-center">
+                <input type="checkbox" id="rememberMe" 
+                  class="w-5 h-5 rounded border-white/20 bg-white/5 text-white checked:bg-white/80 checked:border-0 focus:ring-0 focus:ring-offset-0">
+                <label for="rememberMe" class="ml-2 text-base text-gray-300/90 font-medium">Remember me</label>
+              </div>
+            </div>
+  
+            <button type="submit"
+              class="w-full mt-5 bg-white/95 text-gray-900 py-5 rounded-xl font-bold tracking-wider border border-white/20 hover:border-white/40 relative overflow-hidden">
+              Login
+            </button>
+  
+            <p class="text-center text-gray-400/80 text-sm pt-4">
+              New user?
+              <a routerLink="/register" class="text-white/95 font-medium hover:text-white transition-colors duration-300
+                                     relative before:absolute before:-bottom-1 before:h-px before:w-0 before:bg-white/50 hover:before:w-full before:transition-all before:duration-300">
+                Register here
+              </a>
+            </p>
+          </form>
+        </div>
+      </div>
+
+      <div class="mt-5 text-center">
+        <a routerLink="/" class="text-white/95 font-medium hover:text-white transition-colors duration-300
+                          relative before:absolute before:-bottom-1 before:h-px before:w-0 before:bg-white/50 hover:before:w-full before:transition-all before:duration-300">
+          Back to home
+        </a>
+      </div>
+
+    </div>
+  </div>

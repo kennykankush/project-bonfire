@@ -1,0 +1,46 @@
+<div class="absolute bottom-24 left-1/2 transform -translate-x-1/2 z-50">
+  <button 
+    type="button" 
+    (click)="getUserLocation()" 
+    class="flex items-center justify-center w-24 h-24 rounded-full
+    bg-gradient-to-br from-orange-400 to-orange-300
+    backdrop-blur-sm
+    shadow-[inset_0px_-2px_5px_rgba(100,100,100,.2),0px_2px_20px_rgba(255,153,0,.4)]
+    hover:shadow-[inset_0px_-2px_10px_rgba(100,100,100,.2),0px_2px_30px_rgba(255,153,0,1)]
+    border-1 border-white/60
+    transform hover:scale-110 active:scale-95
+    transition-all duration-500 ease-out
+    group">
+    
+    <div class="relative flex items-center justify-center w-20 h-20
+      bg-gradient-to-br from-orange-500/100 to-amber-500/100
+      rounded-full
+      backdrop-blur-lg
+      shadow-[inset_0px_-2px_5px_rgba(100,100,100,.2)]
+      transition-all duration-500">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" 
+           class="h-12 w-12 transform transition-transform duration-500 ease-out
+           text-white/90 group-hover:text-amber-200/90
+           group-hover:rotate-12 group-hover:scale-110" 
+           fill="none" 
+           viewBox="0 0 24 24" 
+           stroke="currentColor"
+           stroke-width="1.5">
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        <path stroke-linecap="round" 
+              stroke-linejoin="round" 
+              d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    </div>
+
+    <div class="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+      <div class="absolute inset-0 rotate-180 animate-[spin_4s_linear_infinite]">
+        <div class="absolute top-[40%] left-[50%] h-[20%] w-[2px] bg-gradient-to-b from-transparent via-amber-200/40 to-transparent blur-[2px]"></div>
+        <div class="absolute top-[50%] left-[40%] h-[2px] w-[20%] bg-gradient-to-r from-transparent via-amber-200/40 to-transparent blur-[2px]"></div>
+      </div>
+    </div>
+  </button>
+</div>

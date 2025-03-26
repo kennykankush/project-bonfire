@@ -1,0 +1,14 @@
+<button 
+  class="px-5 py-2 rounded-full transition-all duration-300 text-sm font-medium tracking-wide font-inter backdrop-blur-[10px] border-1 border-white/20 relative group"
+  [ngClass]="{
+    'text-white bg-black/90 hover:text-emerald-300 hover:shadow-[inset_0px_-10px_30px_rgba(16,185,129,.7),0_0_15px_2px_rgba(16,185,129,.3)] shadow-[inset_0px_-10px_20px_rgba(20,255,120,.2),0_0_15px_2px_rgba(255,255,255,.15)]': !isFollowing,
+    'text-white bg-black/80 hover:text-red-200 hover:shadow-[inset_0px_-10px_30px_rgba(220,38,38,.7),0_0_15px_2px_rgba(248,113,113,.2)] shadow-[inset_0px_-10px_20px_rgba(240,240,240,.2),0_0_15px_2px_rgba(255,255,255,.15)]': isFollowing
+  }"
+  (click)="isFollowing ? unfollow() : follow()">
+  <span *ngIf="!isFollowing">Follow</span>
+  <span *ngIf="isFollowing" class="group-hover:hidden">Following</span>
+  <span *ngIf="isFollowing" class="hidden group-hover:inline">Unfollow</span>
+</button>
+
+<!-- hover:bg-gray-300 shadow-sm -->
+ <!-- <p style="background-color: rgba(rgb(255, 59, 59), green, blue, alpha);"></p> -->

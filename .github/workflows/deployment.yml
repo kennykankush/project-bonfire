@@ -1,0 +1,77 @@
+name: Bonfire Github Action
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repository
+        uses: actions/checkout@v3
+
+      - name: Docker login
+        uses: docker/login-action@v2
+        with:
+          username: kennykankush
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Buildpush to Docker
+        uses: docker/build-push-action@v4
+        with:
+          context: ./bonfire-v1-app-backend
+          push: true
+          tags: kennykankush/bonfire-backend:latest
+      
+      - name: Buildpush to Docker 2
+        uses: docker/build-push-action@v4
+        with:
+          context: ./bonfire-v1-app
+          push: true
+          tags: kennykankush/angular-frontend:latest
+      
+      - name: Kuber setup
+        uses: azure/setup-kubectl@v3
+      
+      - name: Kuber config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+      
+      - name: App-secrets Exchange
+        working-directory: ./kuber
+        run: |
+          sed -i "s|\${MY_SQL_URL}|${{ secrets.MY_SQL_URL }}|g" app-secrets.yml
+          sed -i "s|\${MY_SQL_USER}|${{ secrets.MY_SQL_USER }}|g" app-secrets.yml
+          sed -i "s|\${MY_SQL_PASSWORD}|${{ secrets.MY_SQL_PASSWORD }}|g" app-secrets.yml
+          sed -i "s|\${MONGO_ATLAS_URI}|${{ secrets.MONGO_ATLAS_URI }}|g" app-secrets.yml
+          sed -i "s|\${JWT_SECRET_KEY}|${{ secrets.JWT_SECRET_KEY }}|g" app-secrets.yml
+          sed -i "s|\${S3ACCESS}|${{ secrets.S3ACCESS }}|g" app-secrets.yml
+          sed -i "s|\${S3SECRET}|${{ secrets.S3SECRET }}|g" app-secrets.yml
+          sed -i "s|\${S3ENDPOINT}|${{ secrets.S3ENDPOINT }}|g" app-secrets.yml
+          sed -i "s|\${S3BUCKET}|${{ secrets.S3BUCKET }}|g" app-secrets.yml
+          sed -i "s|\${EMAIL_PASS}|${{ secrets.EMAIL_PASS }}|g" app-secrets.yml
+
+      - name: Restart
+        working-directory: ./kuber
+        run: |
+          kubectl delete deployment --all 
+          kubectl delete service --all 
+          kubectl delete ingress --all
+      
+      - name: Apply
+        working-directory: ./kuber
+        run: |
+          kubectl apply -f bonfire-v1-backend.yml
+          kubectl apply -f bonfire-v1-frontend.yml
+          kubectl apply -f app-secrets.yml
+          kubectl apply -f ingress.yml
+      
+      - name: Check
+        run: |
+          kubectl get deployments
+          kubectl get services
+          kubectl get ingress

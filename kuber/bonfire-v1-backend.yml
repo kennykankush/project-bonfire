@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bonfire-v1-backend-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+        - name: backend
+          image: kennykankush/bonfire-backend:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+          env:
+            - name: MY_SQL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MY_SQL_URL
+            - name: MY_SQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MY_SQL_USER
+            - name: MY_SQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MY_SQL_PASSWORD
+            - name: MONGO_ATLAS_URI
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: MONGO_ATLAS_URI
+            - name: JWT_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_SECRET_KEY
+            - name: JWT_EXPIRATION_TIMER
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: JWT_EXPIRATION_TIMER   
+            - name: CORS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: CORS_URL
+            - name: S3ACCESS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: S3ACCESS
+            - name: S3SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: S3SECRET
+            - name: S3ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: S3ENDPOINT
+            - name: S3BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: S3BUCKET
+            - name: EMAIL_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: app-secrets
+                  key: EMAIL_PASS
+                    
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bonfire-v1-backend-service
+spec:
+  selector:
+    app: backend
+  ports:
+    - port: 8080
+      targetPort: 8080
+  type: ClusterIP

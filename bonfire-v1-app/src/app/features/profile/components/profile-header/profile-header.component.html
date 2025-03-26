@@ -1,0 +1,86 @@
+<div class="profile-container max-w-5xl mx-auto ">
+  <div class="header-image-container rounded-xl overflow-hidden w-11/12 mx-auto">
+    <img 
+      [src]="profile?.header || '/assets/images/bonfire_homepage_edited.png'" 
+      alt="Profile header"
+      class="w-full h-60 object-cover"
+    >
+  </div>
+  
+  <div class="profile-card rounded-xl relative -mt-10 w-12/12 mx-auto bg-white/1 backdrop-blur-[10px] rounded-xl border-1 border-white/20 shadow-[inset_0px_-10px_25px_rgba(240,240,240,.2),0_0_15px_2px_rgba(255,255,255,.15)]">
+    <div class="card-content flex p-6 justify-center">
+      
+      <div class="stats-section text-white w-1/3 flex items-center justify-center ">
+        <div class="flex items-center">
+          <div class="stat-group text-center">
+            <div class="stat-label text-sm text-gray-400 font-medium">Followers</div>
+            <div class="stat-value text-xl font-bold tracking-wide mt-1">{{ followers || 0 }}</div>
+          </div>
+          
+          <div class="divider mx-3 h-8 w-px bg-gray-600"></div>
+          
+          <div class="stat-group text-center">
+            <div class="stat-label text-sm text-gray-400 font-medium">Following</div>
+            <div class="stat-value text-xl font-bold tracking-wide mt-1">{{ following || 0 }}</div>
+          </div>
+          
+          <div class="divider mx-3 h-8 w-px bg-gray-600"></div>
+          
+          <div class="stat-group text-center">
+            <div class="stat-label text-sm text-gray-400 font-medium">Countries</div>
+            <div class="stat-value text-xl font-bold tracking-wide mt-1">{{ profile?.countries || 0 }}</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="profile-section w-1/6 flex flex-col items-center text-white">
+        <div class="profile-picture-container -mt-20 relative" >
+          <div class="profile-picture-border rounded-2xl p-1 bg-blue-500">
+            <div class="profile-picture rounded-xl overflow-hidden h-24 w-24 bg-white">
+              <img 
+                [src]="profile?.profilePicture || 'assets/default-avatar.png'" 
+                alt="Profile picture"
+                class="h-full w-full object-cover"
+              >
+            </div>
+          </div>
+        
+        </div>
+        
+        <div class="username-container text-center mt-3 mb-1">
+          <div class="user-handle text-sm text-gray-300 font-medium tracking-wide"><a>&#64;</a>{{ profile?.username || 'traveler' }}</div>
+          <div class="joined-date text-xs text-gray-500 mt-1">{{ profile?.bio || 'no bio....' }}</div>
+        </div>
+        
+        <div *ngIf="!isOwnUser" class="mt-2">
+          <app-follow-button 
+            [userPointer]="this.username" 
+            (followStatusChanged)="onFollowStatusChanged($event)">
+          </app-follow-button>
+        </div>
+      </div>
+      
+      <div class="location-section text-white w-1/3 flex items-center justify-center">
+        <div class="flex items-center">
+          <div class="stat-group text-center">
+            <div class="stat-label text-sm text-gray-400 font-medium">Country</div>
+            <div class="country-info flex items-center justify-center mt-1">
+              <app-country-flag [countryFlag]="profile.country" class="mr-2"></app-country-flag>
+            </div>
+          </div>
+          
+          <div class="divider mx-3 h-8 w-px bg-gray-600"></div>
+          
+          <div class="stat-group text-center ml-3">
+            <div class="stat-label text-sm text-gray-400 font-medium">Last Active</div>
+            <div class="last-active-value text-sm text-white mt-1">{{ profile?.lastActivityCountry}} • {{ profile?.lastActivityRelativeTime }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+    
+
+  </div>
+</div>

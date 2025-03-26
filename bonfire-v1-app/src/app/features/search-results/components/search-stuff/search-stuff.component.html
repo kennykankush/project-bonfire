@@ -1,0 +1,51 @@
+<div class="max-w-5xl mx-auto">
+    <div class="rounded-xl overflow-hidden w-11/12 mx-auto bg-slate-950/80 backdrop-blur-sm border border-white/10 shadow-lg mb-6">
+      <div class="p-5">
+        <h2 class="text-xl font-semibold bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent mb-2">Search Results for "{{ searchQuery }}"</h2>
+        <p class="text-gray-400 text-sm">Found {{ queriedUsers.length }} travelers</p>
+      </div>
+    </div>
+    
+    <div *ngIf="isEmpty" class="flex flex-col items-center justify-center py-12 rounded-xl border border-gray-800/40 backdrop-blur-[10px] bg-white/5 shadow-[inset_0px_-10px_25px_rgba(240,240,240,.1),0_0_15px_2px_rgba(255,255,255,.05)] w-11/12 mx-auto">
+      <svg class="w-16 h-16 text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+      </svg>
+      <h3 class="text-xl text-gray-300 mb-2 font-medium tracking-wide">No travelers found</h3>
+      <p class="text-gray-500 text-center">We couldn't find any travelers matching "{{ searchQuery }}"</p>
+    </div>
+    
+    <div *ngIf="!isEmpty" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-11/12 mx-auto">
+      <div *ngFor="let user of queriedUsers" class="rounded-xl bg-white/5 backdrop-blur-[10px] border border-white/10 shadow-[inset_0px_-10px_25px_rgba(240,240,240,.1),0_0_15px_2px_rgba(255,255,255,.05)] overflow-hidden hover:border-amber-500/30 transition-all">
+        <div class="p-5">
+          <div class="flex items-center space-x-4">
+            <div class="rounded-xl overflow-hidden p-0.5 bg-blue-500">
+              <div class="w-14 h-14 rounded-lg overflow-hidden">
+                <img [src]="user.profilePicture || 'https://cdn.discordapp.com/embed/avatars/4.png'" class="w-full h-full object-cover" alt="User avatar">
+              </div>
+            </div>
+            
+            <div>
+              <div class="font-medium text-gray-200 tracking-wide"><a>&#64;</a>{{ user.username }}</div>
+              <div class="text-xs text-gray-500 mt-1">{{ user.country || 'Wandering Traveler' }}</div>
+            </div>
+          </div>
+          
+          <div class="mt-4 pt-4 border-t border-white/10 flex justify-between">
+            <div class="flex space-x-4">
+              <div class="text-center">
+                <div class="text-xs text-gray-400 font-medium">Country</div>
+                <div class="text-sm text-white mt-1">{{ user.country || '—' }}</div>
+              </div>
+            </div>
+            
+            <a [routerLink]="['/profile', user.username]" class="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-500 hover:bg-blue-600 text-white transition-colors">
+              View Profile
+              <svg class="w-3.5 h-3.5 ml-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

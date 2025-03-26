@@ -1,0 +1,59 @@
+<div class="max-w-5xl mx-auto py-4">
+    <div class="w-11/12 mx-auto mb-6">
+      <h2 class="text-xl font-semibold bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent mb-4">Recent Activity</h2>
+      
+      <div *ngIf="!feed" class="flex justify-center py-12">
+        <div class="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-amber-500"></div>
+      </div>
+      
+      <div *ngIf="feed && feed.length > 0" class="space-y-4">
+        <div *ngFor="let item of feed" class="bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl p-4 shadow-[inset_0px_-10px_25px_rgba(240,240,240,.1),0_0_15px_2px_rgba(255,255,255,.05)]">
+          <div class="flex items-start">
+            <div class="rounded-xl overflow-hidden p-0.5 bg-blue-500 mr-3 flex-shrink-0">
+              <div class="w-10 h-10 rounded-lg overflow-hidden">
+                <img [src]="item.profilePicture" class="w-full h-full object-cover">
+              </div>
+            </div>
+            
+
+            <div class="flex-1">
+              <div class="flex items-center flex-wrap">
+                <a [routerLink]="['/profile', item.username]" class="text-gray-200 font-medium hover:text-blue-400 transition-colors">&#64;{{ item.username }}</a>
+                <span class="text-gray-500 text-sm mx-2">•</span>
+                <span class="text-gray-500 text-xs">{{ item.recentcy }}</span>
+                
+                <span *ngIf="item.context" class="ml-2 px-2 py-0.5 text-xs rounded-full" 
+                      [ngClass]="{'bg-amber-600/40 text-amber-200': item.type === 'bonfire', 'bg-blue-600/40 text-blue-200': item.type === 'node'}">
+                  {{ item.context }}
+                </span>
+              </div>
+              
+              <div class="mt-1 text-gray-300">
+                <ng-container [ngSwitch]="item.type">
+                  <ng-container *ngSwitchCase="'bonfire'">
+                    has kindled a bonfire at <span class="text-amber-400 font-medium">{{ item.bodyLandmark }}</span>
+                  </ng-container>
+                  <ng-container *ngSwitchCase="'node'">
+                    has discovered <span class="text-blue-400 font-medium">{{ item.bodyLandmark }}</span>
+                  </ng-container>
+                  <ng-container *ngSwitchDefault>
+                    has logged activity in <span class="text-green-400 font-medium">{{ item.bodyLandmark }}</span>
+                  </ng-container>
+                </ng-container>
+              </div>
+              
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div *ngIf="feed && feed.length === 0" class="text-center py-8 bg-white/5 backdrop-blur-[10px] border border-white/10 rounded-xl">
+        <svg class="w-16 h-16 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+        </svg>
+        <h3 class="text-gray-400 text-lg mb-1">No recent activity</h3>
+        <p class="text-gray-500 text-sm">Bonfires will appear here as travelers discover new places</p>
+      </div>
+    </div>
+  </div>
